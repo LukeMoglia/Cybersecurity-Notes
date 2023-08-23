@@ -1,0 +1,12 @@
+smbclient -N -L //10.129.238.143
+
+        Sharename       Type      Comment
+        ---------       ----      -------
+        ADMIN$          Disk      Remote Admin
+        C$              Disk      Default share
+        IPC$            IPC       Remote IPC
+        Share           Disk      
+        Users           Disk      
+Reconnecting with SMB1 for workgroup listing.
+do_connect: Connection to 10.129.238.143 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)
+Unable to connect with SMB1 -- no workgroup available

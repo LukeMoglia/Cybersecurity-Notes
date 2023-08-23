@@ -1,0 +1,72 @@
+Nmap scan first 
+
+nmap -sV 10.129.238.143
+
+PORT      STATE SERVICE      VERSION
+135/tcp   open  msrpc        Microsoft Windows RPC
+139/tcp   open  netbios-ssn  Microsoft Windows netbios-ssn
+445/tcp   open  microsoft-ds Microsoft Windows 7 - 10 microsoft-ds (workgroup: WORKGROUP)
+49152/tcp open  msrpc        Microsoft Windows RPC
+49153/tcp open  msrpc        Microsoft Windows RPC
+49154/tcp open  msrpc        Microsoft Windows RPC
+49155/tcp open  msrpc        Microsoft Windows RPC
+49156/tcp open  msrpc        Microsoft Windows RPC
+49157/tcp open  msrpc        Microsoft Windows RPC
+Service Info: Host: HARIS-PC; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+See that it's a windows machine
+
+Find out OS version of windows
+
+nmap --script smb-os* -p 445 10.129.238.143
+
+Starting Nmap 7.94 ( https://nmap.org ) at 2023-08-23 16:05 EDT
+Nmap scan report for 10.129.238.143
+Host is up (0.080s latency).
+
+PORT    STATE SERVICE
+445/tcp open  microsoft-ds
+
+Host script results:
+| smb-os-discovery: 
+|   OS: Windows 7 Professional 7601 Service Pack 1 (Windows 7 Professional 6.1)
+|   OS CPE: cpe:/o:microsoft:windows_7::sp1:professional
+|   Computer name: haris-PC
+|   NetBIOS computer name: HARIS-PC\x00
+|   Workgroup: WORKGROUP\x00
+|_  System time: 2023-08-23T21:04:55+01:00
+
+Nmap done: 1 IP address (1 host up) scanned in 3.09 seconds
+
+SMB Client to list shares
+
+smbclient -N -L //10.129.238.143
+
+        Sharename       Type      Comment
+        ---------       ----      -------
+        ADMIN$          Disk      Remote Admin
+        C$              Disk      Default share
+        IPC$            IPC       Remote IPC
+        Share           Disk      
+        Users           Disk      
+Reconnecting with SMB1 for workgroup listing.
+do_connect: Connection to 10.129.238.143 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)
+Unable to connect with SMB1 -- no workgroup available
+
+OS is OS: Windows 7 Professional 7601 Service Pack 1 (Windows 7 Professional 6.1)
+
+Quick google shows it's vulnerable to the Eternal Blue exploit
+
+MS17-010 EternalBlue SMB Remote Windows Kernel Pool Corruption
+
+https://www.rapid7.com/db/modules/exploit/windows/smb/ms17_010_eternalblue/
+
+Set RHOST and LHOST on Metasploit 
+
+Check haris Desktop for user.txt flag and check Administrator desktop for root.txt flag
+
+
+
+
+
+
